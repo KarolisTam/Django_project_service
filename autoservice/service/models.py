@@ -6,13 +6,13 @@ from django.urls import reverse
 # 
 
 class CarModel(models.Model):
-    make = models.CharField(_("Make"), max_length=100)
-    model = models.CharField(_("Model"), max_length=100)
-    year = models.PositiveIntegerField(_("Year"))
-    engine = models.CharField(_("Engine"), max_length=100)
+    make = models.CharField(_("Make"), max_length=100, db_index=True)
+    model = models.CharField(_("Model"), max_length=100, db_index=True)
+    year = models.PositiveIntegerField(_("Year"), null=True, blank=True)
+    engine = models.CharField(_("Engine"), max_length=100, null=True, blank=True)
 
     class Meta:
-        ordering = ["make", "model", "year", "engine"]
+        ordering = ["model", "year"]
         verbose_name = _("car model")
         verbose_name_plural = _("car models")
 
@@ -47,10 +47,9 @@ class Car(models.Model):
 
 class Order(models.Model):
     date = models.CharField(_("data"), max_length=50, db_index=True)
-    price = models.DecimalField(_("price"), max_digits=10, decimal_places=2, db_index=True)
     car = models.ForeignKey(
         Car, 
-        verbose_name=('car'), 
+        verbose_name=_('car'), 
         related_name="orders",
         on_delete=models.CASCADE)
 
@@ -68,31 +67,42 @@ class Order(models.Model):
 
 class Service(models.Model):
     name = models.CharField(_("name"), max_length=100)
-    price = models.IntegerField(_("price"))
+    price = models.DecimalField(_("price"), max_digits=18, decimal_places=2)
 
     class Meta:
+        ordering = ["name", "price"]
         verbose_name = _("service")
         verbose_name_plural = _("services")
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse("model_detail", kwargs={"pk": self.pk})
+    
 
 
-class OrderList(models.Model):
+class OrderEntry(models.Model):
     quantity = models.CharField(_("quantity"), max_length=50)
     price = models.CharField(_("price"), max_length=50)
     service = models.ForeignKey(
         Service,
         related_name='service',
+        related_query_name="order_enteries",
         on_delete=models.CASCADE)
     order= models.ForeignKey(
         Order,
-        related_name='order', 
+        verbose_name="order",
+        related_name='order_enteries', 
         on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = _("order List")
-        verbose_name_plural = _("order Lists")
+        verbose_name = _("order entry")
+        verbose_name_plural = _("order entries")
 
     def __str__(self):
         return f"OrderList #{self.pk}"
+    
+    def get_absolute_url(self):
+        return reverse("order entry_detail", kwargs={"pk": self.pk})
+    
