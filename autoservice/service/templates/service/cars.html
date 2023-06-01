@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
-{% block title %}Cars register at serverice{{ block.super }}{% endblock title %}
+{% block title %}Cars register at serverice {{ block.super }}{% endblock title %}
 {% block content %}
 <h>Cars register at serverice</h>
+{% if car_list %}
+{% with car_list as page_obj %}
+    {% include 'includes/paginator_nav.html' %}
+{% endwith %}
 <ul>
     {% for cars in car_list %}
-    <li><a href="{% url 'cars_detail' cars.pk %}">{{ cars.model }}</a></li>
+        <li><a href="{% url 'cars_detail' cars.pk %}">{{ cars.model }}</a></li>
         {% endfor %}
 </ul>
+{% with car_list as page_obj %}
+    {% include 'includes/paginator_page.html' %}
+{% endwith %}
+{% else %}
+    <p>No Cars found</p>
+{% endif %}
 {% endblock content %}

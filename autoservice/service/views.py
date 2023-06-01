@@ -1,23 +1,24 @@
 from django.shortcuts import render, get_object_or_404
 from . models import Car, OrderEntry, Service, Order
 from django.views import generic
+from django.core.paginator import Paginator
 
 def index(request):
     cars = Car.objects.all().count()
     services = Service.objects.all().count()
     completed_services = OrderEntry.objects.filter(status__exact="complete").count()
-
     context = {
         'cars': cars,
         'services': services,
         'completed_services': completed_services,
     }
-
     return render(request, 'service/index.html', context)
 
 def car_list(request):
+    paginator = Paginator(Car.objects.all(), 2)
+    car_list = paginator.get_page(request.GET.get('page'))
     return render(request, 'service/cars.html', {
-        'car_list': Car.objects.all()
+        'car_list': car_list
         })
 
 def car_details(request, pk: int):
@@ -26,6 +27,7 @@ def car_details(request, pk: int):
 
 class OrderList(generic.ListView):
     model = Order
+    paginate_by = 1
     template_name = 'service/order_list.html'
 
 def order_detail(request, pk: int):

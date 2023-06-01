@@ -7,7 +7,7 @@ body {
     margin: 0;
 }
 header {
-    background-color: #710c9c8b;
+    background-color: #c0ffb0;
 }
 header ul.nav {
     display: flex;
@@ -21,18 +21,17 @@ header ul.nav li {
 }
 header ul.nav .logo {
     font-weight: bold;
-    /* flex-grow: 1; */
 }
 header ul.nav a {
     display: inline-block;
     text-decoration: none;
     color: #000;
-    background-color: #0e4d57;
+    background-color: #e8ffd0;
     padding: 0.2rem 0.5rem;
-    border: 1px solid #023c65;
+    border: 1px solid #559966;
 }
 header ul.nav a:hover {
-    background-color: #0d6fa0;
+    background-color: #f8fff0;
 }
 main {
     flex-grow: 1;
@@ -45,5 +44,39 @@ a {
     color: #447733;
 }
 footer {
-    background-color: #1839079a;
+    background-color: #aacc99;
+}
+.book-status-0 {
+    background-color: #c0ffb0;
+}
+.book-status-1 {
+    background-color: #ffcc99;
+}
+.book-status-2 {
+    background-color: #99ccff;
+}
+.book-status-3, .book-status-7 {
+    background-color: #ff9999;
+}
+.book-instance-id {
+    float: right;
+    color: #999999;
+    padding: 0 0.5rem;
+}
+ul.paginator {
+    list-style: none;
+    padding-inline-start: 0.5rem;
+}
+.paginator {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem;
+    gap: 0.5rem;
+}
+.paginator a, .paginator .current {
+    text-decoration: none;
+    padding: 0 0.5rem;
+    border: 1px solid #aacc99;
+    background-color: #e8ffd0;
+    border-radius: 0.5rem;
 }

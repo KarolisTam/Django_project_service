@@ -15,6 +15,16 @@
         <li><a href="{% url 'index' %}">Home</a></li>
         <li><a href="{% url 'car_list' %}">Cars</a></li>
         <li><a href="{% url 'order_list' %}">Orders</a></li>
+        <li class="user">
+            {% if user.is_authenticated %}
+            &#128100; {{ user.username }}
+            {% endif %}
+        </li>
+        {% if user.is_authenticated %}
+            {% if user.is_staff or user.is_superuser %}
+                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+            {% endif %}
+        {% endif %}
     </ul>
 </header>
 <main>{% block content %}
