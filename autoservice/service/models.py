@@ -1,3 +1,4 @@
+from typing import Any, Iterable, Optional
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -47,16 +48,19 @@ class Car(models.Model):
 
 class Order(models.Model):
     date = models.CharField(_("data"), max_length=50, db_index=True)
+    price = models.DecimalField(_("Price"), max_digits=18, decimal_places=2, null=True, db_index=True)
     car = models.ForeignKey(
         Car, 
-        verbose_name=_('car'), 
-        related_name="orders",
-        on_delete=models.CASCADE)
+        verbose_name=_("car"), 
+        related_name="orders", 
+        on_delete=models.CASCADE, 
+        null=True)
 
     class Meta:
         ordering = ["date", "id"]
         verbose_name = _("order")
         verbose_name_plural = _("orders")
+
 
     def __str__(self):
         return f"Order #{self.pk}"
@@ -84,16 +88,16 @@ class Service(models.Model):
 
 class OrderEntry(models.Model):
     quantity = models.CharField(_("quantity"), max_length=50)
-    price = models.CharField(_("price"), max_length=50)
+    price = models.DecimalField(_("price"), max_digits=18, decimal_places=2)
     service = models.ForeignKey(
         Service,
         related_name='service',
-        related_query_name="order_enteries",
+        related_query_name="order_entries",
         on_delete=models.CASCADE)
     order= models.ForeignKey(
         Order,
         verbose_name="order",
-        related_name='order_enteries', 
+        related_name='order_entries', 
         on_delete=models.CASCADE)
 
     class Meta:
@@ -106,3 +110,20 @@ class OrderEntry(models.Model):
     def get_absolute_url(self):
         return reverse("order entry_detail", kwargs={"pk": self.pk})
     
+    def save_base(self, *args, **kwargs):
+        if self.price != 0:
+            self.price = self.service.price
+        super().save_base(*args, **kwargs)
+
+    STATUS_CHOICES = [
+        ("new", "New"),
+        ("processing", "Processing"),
+        ("complete", "Complete"),
+        ("cancelled", "Cancelled"),
+    ]
+    status = models.CharField(
+        _("Status"),
+        max_length=20, 
+        choices=STATUS_CHOICES, 
+        default=0, 
+        db_index=True)

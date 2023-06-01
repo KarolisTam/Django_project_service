@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Cars register at serverice{{ block.super }}{% endblock title %}
+{% block content %}
+<h>Cars register at serverice</h>
+<ul>
+    {% for cars in car_list %}
+    <li><a href="{% url 'cars_detail' cars.pk %}">{{ cars.model }}</a></li>
+        {% endfor %}
+</ul>
+{% endblock content %}

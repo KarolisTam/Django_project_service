@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Welcome to {{ block.super }}{% endblock title %}
+{% block content %}
+  <h1>Service Orders</h1>
+    <strong>Order #: </strong>{{ order.id }}<br>
+    <strong>Car: </strong>{{ order.car }}<br>
+    <strong>Date: </strong>{{ order.date }}<br>
+    <strong>Order Entries:</strong>
+      <ul>
+        {% for entry in order.order_entries.all %}
+          <li>
+            {{ entry }} ${{ entry.price }}
+            {% if entry.status == "new" %}
+              <span style="color: blue;">{{ entry.status }}</span>
+            {% elif entry.status == "processing" %}
+              <span style="color: orange;">{{ entry.status }}</span>
+            {% elif entry.status == "complete" %}
+              <span style="color: green;">{{ entry.status }}</span>
+            {% elif entry.status == "cancelled" %}
+              <span style="color: red;">{{ entry.status }}</span>
+            {% else %}
+              {{ entry.status }}
+            {% endif %}
+          </li>
+        {% empty %}
+          <li>No order entries found.</li>
+        {% endfor %}
+      </ul>
+        <strong>Total Price: ${{ total_price }}</strong>
+{% endblock %}
