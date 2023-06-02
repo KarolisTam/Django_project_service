@@ -11,6 +11,11 @@ class CarModel(models.Model):
     model = models.CharField(_("Model"), max_length=100, db_index=True)
     year = models.PositiveIntegerField(_("Year"), null=True, blank=True)
     engine = models.CharField(_("Engine"), max_length=100, null=True, blank=True)
+    cover = models.ImageField(
+        _("cover"), 
+        upload_to='service/car_covers', 
+        null=True,
+        blank=True)
 
     class Meta:
         ordering = ["model", "year"]

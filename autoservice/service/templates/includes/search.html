@@ -1,0 +1,4 @@
+<form action="", method="get">
+    <input name="q" type="text" value="{{request.GET.q}}">
+    <button type="submit">&#128269;</button>
+    {% if request.GET.q %}<a href="{{ request.path}}">Clear</a>{% endif %}

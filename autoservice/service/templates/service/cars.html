@@ -1,20 +1,45 @@
 {% extends 'base.html' %}
-{% block title %}Cars register at serverice {{ block.super }}{% endblock title %}
+{% load static %}
+
+{% block title %}
+    Cars registered at service {{ block.super }}
+{% endblock title %}
+
 {% block content %}
-<h>Cars register at serverice</h>
-{% if car_list %}
-{% with car_list as page_obj %}
-    {% include 'includes/paginator_nav.html' %}
-{% endwith %}
-<ul>
-    {% for cars in car_list %}
-        <li><a href="{% url 'cars_detail' cars.pk %}">{{ cars.model }}</a></li>
-        {% endfor %}
-</ul>
-{% with car_list as page_obj %}
-    {% include 'includes/paginator_page.html' %}
-{% endwith %}
-{% else %}
-    <p>No Cars found</p>
-{% endif %}
+    <h1>Cars registered at service</h1>
+    {% include 'includes/search.html' %}
+    
+    {% if car_list %}
+        {% with car_list as page_obj %}
+            {% include 'includes/paginator_nav.html' %}
+        {% endwith %}
+        
+        <ul class="car_list">
+            {% for car in car_list %}
+                <li>
+                    <a href="{% url 'cars_detail' car.pk %}">{{ car.model }}</a>
+                </li>
+                
+                {% if car.model.cover %}
+                    <img class="car-cover" src="{{ car.model.cover.url }}">
+                {% else %}
+                    <img class="car-cover" src="{% static 'service/img/default_cover.jpg' %}">
+                {% endif %}
+                
+                <h3>
+                    {% if car.model|length > 36 %}
+                        {{ car.model|slice:35 }}...
+                    {% else %}
+                        {{ car.model }}
+                    {% endif %}
+                </h3>
+            {% endfor %}
+        </ul>
+        
+        {% with car_list as page_obj %}
+            {% include 'includes/paginator_page.html' %}
+        {% endwith %}
+    {% else %}
+        <p>No cars found</p>
+    {% endif %}
 {% endblock content %}

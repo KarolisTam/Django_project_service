@@ -1,3 +1,6 @@
+from typing import Any
+from django.db.models import Q
+from django.db.models.query import QuerySet
 from django.shortcuts import render, get_object_or_404
 from . models import Car, OrderEntry, Service, Order
 from django.views import generic
@@ -15,7 +18,17 @@ def index(request):
     return render(request, 'service/index.html', context)
 
 def car_list(request):
-    paginator = Paginator(Car.objects.all(), 2)
+    qs = Car.objects
+    q = request.GET.get('q')
+    if q:
+        qs = qs.filter(Q(licence_plate__icontains=q) |
+        Q(vin_code__icontains=q) |
+        Q(customer__icontains=q) |
+        Q(model__model__icontains=q)
+        )
+    else:
+        qs = qs.all()
+    paginator = Paginator(qs, 2)
     car_list = paginator.get_page(request.GET.get('page'))
     return render(request, 'service/cars.html', {
         'car_list': car_list
@@ -29,6 +42,19 @@ class OrderList(generic.ListView):
     model = Order
     paginate_by = 1
     template_name = 'service/order_list.html'
+
+    def get_queryset(self) -> QuerySet[Any]:
+        qs = super().get_queryset()
+        q = self.request.GET.get("q")
+        if q:
+            qs = qs.filter(
+                Q(date__icontains=q) |
+                Q(car__customer__icontains=q) |
+                Q(car__licence_plate__icontains=q) |
+                Q(car__vin_code__istartswith=q) |
+                Q(car__model__model__icontains=q)
+            )
+        return qs
 
 def order_detail(request, pk: int):
     order = get_object_or_404(Order, pk=pk)

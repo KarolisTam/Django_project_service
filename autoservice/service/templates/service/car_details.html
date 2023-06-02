@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Welcome to {{ block.super }}{% endblock title %}
-
 {% block content %}
+{% if cars.model.cover %}
+    <img class="car-cover" src="{{ cars.model.cover.url }}">
+{% else %}
+    <img class="car-cover" src="{% static 'service/img/default_cover.jpg' %}">
+{% endif %}
     <h1>Car Detail</h1>
     <p><strong>Owner:</strong> {{ cars.customer }}</p>
     <p><strong>Model:</strong> {{ cars.model }}</p>
