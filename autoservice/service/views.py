@@ -58,8 +58,8 @@ class OrderList(generic.ListView):
 
 def order_detail(request, pk: int):
     order = get_object_or_404(Order, pk=pk)
-    total_price = sum(entry.price for entry in order.order_entries.all())
+    # total_price = sum(entry.price for entry in order.order_entries.all())
     return render(request, 'service/orders_detail.html', {
-        'order': order, 'total_price': total_price
+        'order': order, #'total_price': total_price
         })
 

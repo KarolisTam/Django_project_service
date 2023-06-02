@@ -32,7 +32,7 @@ class CarModel(models.Model):
 class Car(models.Model):
     licence_plate = models.CharField(_("Licence Plate"), max_length=20, db_index=True)
     vin_code = models.CharField(_("VIN Code"), max_length=50, db_index=True)
-    customer = models.CharField(_("client"), max_length=50, db_index=True)
+    customer = models.CharField(_("client"), max_length=50)
     model =  models.ForeignKey(
         CarModel,
         verbose_name=('model'),
@@ -52,8 +52,8 @@ class Car(models.Model):
 
 
 class Order(models.Model):
-    date = models.CharField(_("data"), max_length=50, db_index=True)
-    price = models.DecimalField(_("Price"), max_digits=18, decimal_places=2, null=True, db_index=True)
+    date = models.DateField(_("data"), db_index=True)
+    price = models.DecimalField(_("Price"), max_digits=18, decimal_places=2, default=0)
     car = models.ForeignKey(
         Car, 
         verbose_name=_("car"), 
@@ -92,8 +92,9 @@ class Service(models.Model):
 
 
 class OrderEntry(models.Model):
-    quantity = models.CharField(_("quantity"), max_length=50)
-    price = models.DecimalField(_("price"), max_digits=18, decimal_places=2)
+    quantity = models.DecimalField(_("quantity"), max_digits=18, decimal_places=2, default=1)
+    price = models.DecimalField(_("price"), max_digits=18, decimal_places=2, default=0)
+    total = models.DecimalField(_("total"), max_digits=18, decimal_places=2, default=0)
     service = models.ForeignKey(
         Service,
         related_name='service',
@@ -110,15 +111,18 @@ class OrderEntry(models.Model):
         verbose_name_plural = _("order entries")
 
     def __str__(self):
-        return f"OrderList #{self.pk}"
+        return f"{self.service} {self.quantity} {self.price}"
     
     def get_absolute_url(self):
         return reverse("order entry_detail", kwargs={"pk": self.pk})
     
-    def save_base(self, *args, **kwargs):
-        if self.price != 0:
+    def save(self, *args, **kwargs):
+        if self.price == 0:
             self.price = self.service.price
-        super().save_base(*args, **kwargs)
+        self.total = self.price * self.quantity
+        super().save(*args, **kwargs)
+        self.order.price = self.order.order_entries.aggregate(models.Sum("total"))["total__sum"]
+        self.order.save()
 
     STATUS_CHOICES = [
         ("new", "New"),

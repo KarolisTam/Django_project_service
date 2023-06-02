@@ -3,6 +3,7 @@
 {% block content %}
 <h1>Service Orders</h1>
 	<strong>Order #: </strong>{{ order.id }}<br>
+	<strong>Car Owner: <strong>{{ order.car.customer}}<br>
 	<strong>Car: </strong>{{ order.car }}<br>
 	<strong>Date: </strong>{{ order.date }}<br>
 	<strong>Order Entries:</strong>
