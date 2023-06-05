@@ -8,12 +8,15 @@ from django.core.paginator import Paginator
 
 def index(request):
     cars = Car.objects.all().count()
+    num_visits = request.session.get('num_visits', 1)
+    request.session['num_visits'] = num_visits + 1
     services = Service.objects.all().count()
     completed_services = OrderEntry.objects.filter(status__exact="complete").count()
     context = {
         'cars': cars,
         'services': services,
         'completed_services': completed_services,
+        'num_visits': num_visits,
     }
     return render(request, 'service/index.html', context)
 
@@ -60,6 +63,8 @@ def order_detail(request, pk: int):
     order = get_object_or_404(Order, pk=pk)
     # total_price = sum(entry.price for entry in order.order_entries.all())
     return render(request, 'service/orders_detail.html', {
-        'order': order, #'total_price': total_price
+        'order': order, 'total_price': order.price
         })
+
+
 

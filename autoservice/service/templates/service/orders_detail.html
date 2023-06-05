@@ -10,7 +10,7 @@
 	<ul>
 		{% for entry in order.order_entries.all %}
 		<li>
-			{{ entry }} ${{ entry.price }}
+			{{ entry.service }} {{entry.quantity}} ${{ entry.price }}
 			{% if entry.status == "new" %}
 			<span style="color: blue;">{{ entry.status }}</span>
 			{% elif entry.status == "processing" %}
