@@ -105,3 +105,9 @@ ul.car-list li {
 ul.car-list img.car-cover {
     max-width: 20%;
 }
+.order-overdue {
+    background-color: #aa0000;
+    color: #ffffff;
+    font-weight: bolder;
+    padding: 0 0.5rem;
+}

@@ -1,4 +1,5 @@
 from typing import Any
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.shortcuts import render, get_object_or_404
@@ -67,4 +68,12 @@ def order_detail(request, pk: int):
         })
 
 
+class UserOrderEntryListView(LoginRequiredMixin, generic.ListView):
+    model = Order
+    template_name = 'service/user_orderentry_list.html'
+    paginate_by = 10
 
+    def get_queryset(self) -> QuerySet[Any]:
+        qs = super().get_queryset()
+        qs = qs.filter(car__client=self.request.user)
+        return qs

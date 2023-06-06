@@ -29,8 +29,6 @@
                 <h3>
                     {% if car.model|length > 36 %}
                         {{ car.model|slice:35 }}...
-                    {% else %}
-                        {{ car.model }}
                     {% endif %}
                 </h3>
             {% endfor %}

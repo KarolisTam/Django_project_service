@@ -8,14 +8,19 @@ class OrderEntryInLine(admin.TabularInline):      # Pasiema oderentery lentele
     extra = 0
 
 
+class OrderEntryAdmin(admin.ModelAdmin):
+    list_display = ('order', 'status', 'service')
+    list_filter = ('order', 'status')
+    list_editable = ('status', )
+
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'car', 'date')
+    list_display = ('client', 'car', "due_back", 'date')
     inlines = [OrderEntryInLine]    # Prideda OderEntry lente po oder, kad galima butu prideti dar viena 
 
 
 class CarAdmin(admin.ModelAdmin):
-    list_display = ('customer', 'vin_code', 'licence_plate', 'model')
-    list_filter = ('model', 'customer')
+    list_display = ('client', 'licence_plate', 'model', 'note')
+    list_filter = ('model', 'note')
     search_fields = ('licence_plate', 'vin_code')
 
 
@@ -27,4 +32,4 @@ admin.site.register(models.Order, OrderAdmin)
 admin.site.register(models.Car, CarAdmin)
 admin.site.register(models.CarModel)
 admin.site.register(models.Service, ServiceAdmin)
-admin.site.register(models.OrderEntry)
+admin.site.register(models.OrderEntry, OrderEntryAdmin)

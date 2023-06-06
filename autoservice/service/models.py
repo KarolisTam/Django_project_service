@@ -1,10 +1,14 @@
+from django.contrib.auth import get_user_model
 from typing import Any, Iterable, Optional
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
+from datetime import date
+from tinymce.models import HTMLField
 
 # verbose_name   <--- nurodo ka matys klientas
 # 
+User = get_user_model()
 
 class CarModel(models.Model):
     make = models.CharField(_("Make"), max_length=100, db_index=True)
@@ -30,14 +34,20 @@ class CarModel(models.Model):
 
 
 class Car(models.Model):
-    licence_plate = models.CharField(_("Licence Plate"), max_length=20, db_index=True)
-    vin_code = models.CharField(_("VIN Code"), max_length=50, db_index=True)
-    customer = models.CharField(_("client"), max_length=50)
+    client = models.ForeignKey(
+        User, 
+        verbose_name=_("client"), 
+        related_name="car",
+        null=True, blank=True,
+        on_delete=models.CASCADE)
     model =  models.ForeignKey(
         CarModel,
         verbose_name=('model'),
         related_name="cars",
         on_delete=models.CASCADE)
+    licence_plate = models.CharField(_("Licence Plate"), max_length=20, db_index=True)
+    vin_code = models.CharField(_("VIN Code"), max_length=50, db_index=True)
+    note = HTMLField(_("Client note"), max_length=50, null=True, blank=True)
 
     class Meta:
         ordering = ["licence_plate"]
@@ -60,6 +70,17 @@ class Order(models.Model):
         related_name="orders", 
         on_delete=models.CASCADE, 
         null=True)
+    due_back = models.DateField(_("due back"), null=True, blank=True, db_index=True)
+
+    @property
+    def client(self):
+        return self.car.client
+
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        return False
 
     class Meta:
         ordering = ["date", "id"]
@@ -68,7 +89,7 @@ class Order(models.Model):
 
 
     def __str__(self):
-        return f"Order #{self.pk}"
+        return f"Order Nr.{self.pk}. {self.car.client}"
 
     def get_absolute_url(self):
         return reverse("order_detail", kwargs={"pk": self.pk})
@@ -116,6 +137,19 @@ class OrderEntry(models.Model):
     def get_absolute_url(self):
         return reverse("order entry_detail", kwargs={"pk": self.pk})
     
+    def get_color(self):
+        colors = {
+            "new": "blue",
+            "processing": "orange",
+            "complete": "green",
+            "cancelled": "red",
+        }
+        default_color = "black"
+        return colors.get(self.status, default_color)
+
+    def get_status_display(self):
+        return dict(self.STATUS_CHOICES).get(self.status)
+
     def save(self, *args, **kwargs):
         if self.price == 0:
             self.price = self.service.price
@@ -136,3 +170,5 @@ class OrderEntry(models.Model):
         choices=STATUS_CHOICES, 
         default=0, 
         db_index=True)
+    
+    
