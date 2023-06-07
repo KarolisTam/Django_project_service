@@ -95,15 +95,19 @@ ul.car-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    list-style: none;
     gap: 0.5rem;
     padding-inline-start: 0;
+    list-style: none;
+    max-width: 100%;
 }
-ul.car-list li {
+/* ul.car-list li {
     max-width: 30vw;
-}
+} */
 ul.car-list img.car-cover {
     max-width: 20%;
+}
+.order-list {
+    list-style: none;
 }
 .order-overdue {
     background-color: #aa0000;
@@ -135,4 +139,13 @@ ul.car-list img.car-cover {
 form p label {
     display: inline-block;
     min-width: 12vw;
+}
+label[for='id_content'] {
+    display: none;
+}
+img.user-profile-picture {
+    max-width: 20vw;
+    padding: 0 0.5rem;
+    border-radius: 1rem;
+    float: left;
 }

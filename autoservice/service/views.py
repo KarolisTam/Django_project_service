@@ -48,7 +48,7 @@ def car_details(request, pk: int):
 
 class OrderList(generic.ListView):
     model = Order
-    paginate_by = 1
+    paginate_by = 4
     template_name = 'service/order_list.html'
 
     def get_queryset(self) -> QuerySet[Any]:

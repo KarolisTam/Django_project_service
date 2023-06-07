@@ -14,7 +14,7 @@
             {% include 'includes/paginator_nav.html' %}
         {% endwith %}
         
-        <ul class="car_list">
+        <ul class="car-list">
             {% for car in car_list %}
                 <li>
                     <a href="{% url 'cars_detail' car.pk %}">{{ car.model }}</a>

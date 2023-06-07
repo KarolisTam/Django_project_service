@@ -1,9 +1,18 @@
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.views.decorators.csrf import csrf_protect
 # Create your views here.
 User = get_user_model()
+
+def profile(request, user_id=None):
+    if user_id == None:
+        user = request.user
+    else:
+        user = get_object_or_404(get_user_model(), id=user_id)
+    return render(request, 'user_profile/profile.html', {'user_': user})
+
 
 @csrf_protect
 def signup(request):
