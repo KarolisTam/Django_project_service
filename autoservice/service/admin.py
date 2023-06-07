@@ -28,8 +28,12 @@ class ServiceAdmin(admin.ModelAdmin):
     list_display = ('name', 'price')
 
 
+class OrderReviewAdmin(admin.ModelAdmin):
+    list_display = ('created_at', 'commenter', 'order', 'content')
+
 admin.site.register(models.Order, OrderAdmin)
 admin.site.register(models.Car, CarAdmin)
 admin.site.register(models.CarModel)
 admin.site.register(models.Service, ServiceAdmin)
 admin.site.register(models.OrderEntry, OrderEntryAdmin)
+admin.site.register(models.OrderReview, OrderReviewAdmin)

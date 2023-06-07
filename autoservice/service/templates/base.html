@@ -23,6 +23,7 @@
         <li><a href="{% url 'user_orders' %}">My Orders</a></li>
         {% else %}
         <li><a href="{% url 'login' %}?next={{request.path}}">Login</a></li>
+        <li><a href="{% url 'signup' %}">Sign up</a></li>
         {% endif %}
         {% if user.is_authenticated %}
             {% if user.is_staff or user.is_superuser %}
@@ -31,7 +32,13 @@
         {% endif %}
     </ul>
 </header>
-<main>{% block content %}
+<main>
+    {% if messages %}
+    {% for message in messages %}
+        <p class="box box-{{ message.tags }}">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+{% block content %}
 {% endblock content %}</main>
 <footer><p>&copy; 2023 K. T. AutoService</p></footer>
 </body>

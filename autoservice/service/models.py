@@ -172,3 +172,31 @@ class OrderEntry(models.Model):
         db_index=True)
     
     
+class OrderReview(models.Model):
+    order = models.ForeignKey(
+        Order, 
+        verbose_name=_("order"),
+        related_name="reviews",
+        on_delete=models.CASCADE,
+    )
+    commenter = models.ForeignKey(
+        User, 
+        verbose_name=_("commenter"),
+        related_name="order_commenter", 
+        on_delete=models.CASCADE
+    )
+    created_at = models.DateField(_("Created"), auto_now_add=False)
+    content = models.TextField(_("content"), max_length=4000)
+
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = _("order review")
+        verbose_name_plural = _("order reviews")
+
+    def __str__(self):
+        return f"{self.created_at}: {self.commenter}"
+
+    def get_absolute_url(self):
+        return reverse("order review_detail", kwargs={"pk": self.pk})
+
