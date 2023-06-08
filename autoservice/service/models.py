@@ -185,7 +185,7 @@ class OrderReview(models.Model):
         related_name="order_commenter", 
         on_delete=models.CASCADE
     )
-    created_at = models.DateField(_("Created"), auto_now_add=False)
+    created_at = models.DateField(_("Created"), auto_now_add=True)
     content = models.TextField(_("content"), max_length=4000)
 
 

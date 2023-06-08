@@ -39,8 +39,12 @@
 {% if order.reviews.count > 0 %}
 	<ul>
 		{% for review in order.reviews.all %}
-			<li>{{ review.reviewed_at }} by {{ review.reviewer }}<br>
-				{{ review.content }}
+		<li>{{ review.created_at }} by <a href="{% url 'profile' review.commenter.id %}">
+			{% if review.commenter.profile.picture %}
+				<img src="{{ review.commenter.profile.picture.url }}" class="user-avatar">
+			{% endif %}
+			{{ review.commenter }}</a><br>
+			{{ review.content }}
 			</li>
 		{% endfor %}
 	</ul>

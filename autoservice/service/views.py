@@ -57,7 +57,7 @@ class OrderList(generic.ListView):
         if q:
             qs = qs.filter(
                 Q(date__icontains=q) |
-                Q(car__customer__icontains=q) |
+                Q(car__client__username__icontains=q) |
                 Q(car__licence_plate__icontains=q) |
                 Q(car__vin_code__istartswith=q) |
                 Q(car__model__model__icontains=q)
