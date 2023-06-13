@@ -1,39 +1,46 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}	
+{% load static i18n %}
 {% block title %}Welcome to {{ block.super }}{% endblock title %}
 {% block content %}
-<h1>Service Orders</h1>
-	<strong>Order #: </strong>{{ order.id }}<br>
-	<strong>Car Owner: <strong>{{ order.car.client}}<br>
-	<strong>Car: </strong>{{ order.car }}<br>
-	<strong>Date: </strong>{{ order.date }}<br>
-	<strong>Car due back:</strong>{{ order.due_back}}<br>
-	<strong>Customer notes:</strong>{{order.car.note|safe}}
+<h1>{% trans "service orders"|capfirst %}</h1>
+{% if order.car.foto%}
+<img class="car-cover" src="{{ order.car.foto.url }}"><br>
+{% else %}
+<img class="car-cover" src="{% static 'service/img/default_cover.jpg' %}"><br>
+{% endif %}
+	<strong>{% trans "order"|capfirst %} #: </strong>{{ order.id }}<br>
+	<strong>{% trans "car owner"|capfirst %}: <strong>{{ order.car.client}}<br>
+	<strong>{% trans "car"|capfirst %}: </strong>{{ order.car.model }}<br>
+	<strong>{% trans "car licence plate"|capfirst %} </strong>{{ order.car }}<br>
+	<strong>{% trans "date"|capfirst %}: </strong>{{ order.date }}<br>
+	<strong>{% trans "car due back"|capfirst %}:</strong>{{ order.due_back}}<br>
+	<strong>{% trans "customer notes"|capfirst %}:</strong>{{order.car.note|safe}}
 	<ul>
+{% if user.is_authenticated %}
+{% if user.is_superuser or user.is_staff or user == order.car.client %}
 		{% for entry in order.order_entries.all %}
 		{{ entry.service.name }}:<br> 
-		Quantity - {{ entry.quantity }}, 
-		Price - {{ entry.price }}$,<br>
-		Status - 
+		{% trans "quantity"|capfirst %} - {{ entry.quantity }}, 
+		{% trans "price"|capfirst %} - {{ entry.price }}$,<br>
+		{% trans "status"|capfirst %} - 
 			{% with entry_color=entry.get_color %}
 			<span style="color: {{ entry_color }}">{{ entry.get_status_display }}<br><br></span>
 			{% endwith %}
 		
 		{% empty %}
-		<li>No order entries found.</li>
+		<li>{% trans "no order entries found."|capfirst %}</li>
 		{% endfor %}
 	</ul>
-		<strong>Total Price: ${{ total_price }}</strong>
-<h2>Reviews</h2>
-{% if user.is_authenticated %}
-{% if user.is_superuser or user.is_staff or user == order.car.client %}
+		<strong>{% trans "total price"|capfirst %}: ${{ total_price }}</strong>
+<h2>{% trans "reviews"|capfirst %}</h2>
 	<form method="post" action="{{ request.path }}">
-	<h3>Leave your review</h3>
+	<h3>{% trans "leave your review"|capfirst %}</h3>
 	{% csrf_token %}
 	{{ form.as_p }}
 	<button type="submit">Post</button>
 	</form>
 {% else %}
-	<p class="box box-info">the car owner or employee can participate in the order discussion</p>
+	<p class="box box-info">{% trans "the car owner or employee can participate in the order discussion"|capfirst %}</p>
 {% endif %}
 {% endif %}
 {% if order.reviews.count > 0 %}

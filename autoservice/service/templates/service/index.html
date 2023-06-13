@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
-{% load humanize %}
+{% load humanize i18n %}
 {% block title %}Welcome to {{ block.super }}{% endblock title %}
 {% block content %}
 <h1>KT CarService</h1>
 <p>Welcome to CarService!</p>
-<p>Currently Statistics:</p>
+<p>{% trans "currently statistics"|capfirst %}:</p>
 <ul>
-    <li><strong>Cars:</strong> {{ cars }}</li>
-    <li><strong>Service:</strong> {{ services }}</li>
-    <li><strong>Car was fixed:</strong> {{ completed_services }}</li>
-    <li><strong>Already visit this website for {{ num_visits|ordinal }}</strong>
+    <li><strong>{% trans "cars"|capfirst %}:</strong> {{ cars }}</li>
+    <li><strong>{% trans "service"|capfirst %}:</strong> {{ services }}</li>
+    <li><strong>{% trans "car was fixed"|capfirst %}:</strong> {{ completed_services }}</li>
+    <li><strong>{% trans "already visit this website for"|capfirst %} {{ num_visits|ordinal }}</strong>
 </ul>
 {% endblock content %}

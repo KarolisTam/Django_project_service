@@ -1,0 +1,60 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-12 11:06+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
+"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
+"1 : n % 1 != 0 ? 2: 3);\n"
+#: .\user_profile\models.py:11
+msgid "user"
+msgstr "vartotojas"
+
+#: .\user_profile\models.py:15
+msgid "picture"
+msgstr "nuotrauka"
+
+#: .\user_profile\models.py:19
+msgid "profile"
+msgstr "profilis"
+
+#: .\user_profile\models.py:20
+msgid "profiles"
+msgstr "profiliai"
+
+#: .\user_profile\views.py:29
+msgid "Profile updated."
+msgstr "Profilis atnaujintas"
+
+#: .\user_profile\views.py:40
+msgid "In order to sign up, you need to logout first"
+msgstr "Norint prisiregistruoti, prašome atsijungti"
+
+#: .\user_profile\views.py:52
+msgid "Username is too short or already exists."
+msgstr "Jūsų pasirinktas slapyvardis per trumpas arba jau užimtas."
+
+#: .\user_profile\views.py:55
+msgid "Email is invalid or user with this email already exists."
+msgstr "Klaidingas E.paštas arba jau egzistuoja"
+
+#: .\user_profile\views.py:58
+msgid "Password must be at least 8 characters long and match."
+msgstr "Slaptažodis turi būti bent 8 simboliu arba ilgesnis."
+
+#: .\user_profile\views.py:68
+msgid "User registration successful!"
+msgstr "Jūsų registracija sėkminga!"

@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 {% block title %}Welcome to {{ block.super }}{% endblock title %}
 {% block content %}
-<h1>Service Orders</h1>
+<h1>{% trans "service orders"|capfirst %}</h1>
 {% include 'includes/search.html' %}
 {% include 'includes/paginator_nav.html' %}
 <ul class="order-list">
     {% for order in order_list %}
     <li>
-        <strong>Order #{{ order.id }}</strong><a href="{% url 'order_detail' order.pk %}"> {{ order.car }} {{ order.date }}</a>
+        <strong>{% trans "order"|capfirst %} #{{ order.id }}</strong><a href="{% url 'order_detail' order.pk %}"> {{ order.car }} {{ order.date }}</a>
     </li>
     {% empty %}
-    <li>No orders found.</li>
+    <li>{% trans "No orders found."|capfirst %}</li>
     {% endfor %}
 </ul>
 {% include 'includes/paginator_page.html' %}

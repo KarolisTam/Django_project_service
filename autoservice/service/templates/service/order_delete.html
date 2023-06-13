@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}Delete order at {{ block.super }}{% endblock title %}
+{% block content %}
+<h1>Delete car</h1>
+{% if order%}
+    <p><strong>{% trans "order"|capfirst %} #: </strong>{{ order.id }}<br>
+    <p><strong>{% trans "car"|capfirst %}: </strong>{{ order.car }}<br>
+    <p><strong>{% trans "date"|capfirst %}: </strong>{{ order.date }}<br>
+    <form action="{{ request.path }}" method='post'>
+        {% csrf_token %}
+        <button type='submit'>Delete</button>
+        <a href='{% url "user_orders" %}'>{% trans "Change your mind?"|capfirst %}<a/>
+        </form>
+{% endif %}
+{% endblock content %}

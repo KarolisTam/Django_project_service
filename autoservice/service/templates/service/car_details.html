@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 {% block title %}Welcome to {{ block.super }}{% endblock title %}
 {% block content %}
 {% if cars.model.cover %}
@@ -7,9 +7,9 @@
 {% else %}
     <img class="car-cover" src="{% static 'service/img/default_cover.jpg' %}">
 {% endif %}
-    <h1>Car Detail</h1>
-    <p><strong>Owner:</strong> {{ cars.customer }}</p>
-    <p><strong>Model:</strong> {{ cars.model }}</p>
-    <p><strong>License Plate:</strong> {{ cars.licence_plate }}</p>
-    <p><strong>VIN Code:</strong> {{ cars.vin_code }}</p>
+    <h1>{% trans "car detail"|capfirst%}</h1>
+    <p><strong>{% trans "owner"|capfirst %}:</strong> {{ cars.client }}</p>
+    <p><strong>{% trans "model"|capfirst %}:</strong> {{ cars.model }}</p>
+    <p><strong>{% trans "license olate"|capfirst %}:</strong> {{ cars.licence_plate }}</p>
+    <p><strong>{% trans "VIN code"|capfirst %}:</strong> {{ cars.vin_code }}</p>
 {% endblock %}

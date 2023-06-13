@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
 {% block title %}
     Cars registered at service {{ block.super }}
 {% endblock title %}
 
 {% block content %}
-    <h1>Cars registered at service</h1>
+    <h1>{% trans "cars registered at service"|capfirst %}</h1>
     {% include 'includes/search.html' %}
     
     {% if car_list %}

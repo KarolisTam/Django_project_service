@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "my cars at "|capfirst %}{{ block.super }}{% endblock title %}
+{% block content %}
+<h1> {% trans "your cars"|capfirst %}<a class="button float-right", href="{% url 'user_car_create' %}">{% trans "add new car"|capfirst %}</a></h1>
+{% if car_list %}
+<ul>
+    {% for car in car_list %}
+    <li>
+        <a href="{% url 'cars_detail' car.pk %}">{{ car.licence_plate }} {{ car.model }}</a>
+        <a class="button" href="{% url 'user_car_update' car.pk %}"> {% trans "edit"|capfirst %}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% endblock content %}

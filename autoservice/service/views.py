@@ -1,15 +1,19 @@
-from typing import Any, Dict
-from django.contrib.auth.mixins import LoginRequiredMixin
+from typing import Any, Dict, Type
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models.query import QuerySet
 from django.db.models import Q
+from django.forms.models import BaseModelForm
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, reverse
+from django.http.response import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from . models import Car, OrderEntry, Service, Order, OrderReview
 from django.views import generic
-from . forms import OrderReviewForm
+from . forms import OrderReviewForm, OrderCreateForm, CarCreateForm
+from django.urls import reverse, reverse_lazy
+from datetime import date, timedelta
 
 def index(request):
     cars = Car.objects.all().count()
@@ -64,17 +68,10 @@ class OrderList(generic.ListView):
             )
         return qs
 
-# def order_detail(request, pk: int):
-#     order = get_object_or_404(Order, pk=pk)
-#     # total_price = sum(entry.price for entry in order.order_entries.all())
-#     return render(request, 'service/orders_detail.html', {
-#         'order': order, 'total_price': order.price
-#         })
 
-
-class UserOrderEntryListView(LoginRequiredMixin, generic.ListView):
+class UserOrderListView(LoginRequiredMixin, generic.ListView):
     model = Order
-    template_name = 'service/user_orderentry_list.html'
+    template_name = 'service/user_orders.html'
     paginate_by = 10
 
     def get_queryset(self) -> QuerySet[Any]:
@@ -82,6 +79,17 @@ class UserOrderEntryListView(LoginRequiredMixin, generic.ListView):
         qs = qs.filter(car__client=self.request.user)
         return qs
     
+
+class UserCarListView(LoginRequiredMixin, generic.ListView):
+    model = Car
+    template_name = "service/user_cars.html"
+    paginate_by = 5
+
+    def get_queryset(self) -> QuerySet[Any]:
+        qs = super().get_queryset()
+        qs = qs.filter(client=self.request.user)
+        return qs
+
 
 class OrderDetailReview(generic.edit.FormMixin, generic.DetailView):
     model = Order
@@ -116,3 +124,75 @@ class OrderDetailReview(generic.edit.FormMixin, generic.DetailView):
     
     def get_success_url(self) -> str:
         return reverse('order_detail', kwargs={'pk':self.get_object().pk})
+    
+
+class OrderCreateView(LoginRequiredMixin ,generic.CreateView):
+    model = Order
+    form_class = OrderCreateForm
+    template_name = "service/user_order_create.html"
+
+    def get_form(self, form_class: Type[BaseModelForm] | None = form_class) -> BaseModelForm:
+        form = super().get_form(form_class)
+        if not form.is_bound:
+            form.fields['car'].queryset = Car.objects.filter(client=self.request.user)
+        return form
+
+    def get_initial(self) -> Dict[str, Any]:
+        initial = super().get_initial()
+        initial['due_back'] = date.today() + timedelta(days=2)
+
+
+class CarCreateView(LoginRequiredMixin ,generic.CreateView):
+    model = Car
+    form_class = CarCreateForm
+    template_name = "service/user_car_create.html"
+
+    def get_initial(self) -> Dict[str, Any]:
+        initial = super().get_initial()
+        initial['client'] = self.request.user
+        initial['foto'] = self.request.FILES
+        return initial
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form.instance.client = self.request.user
+        return super().form_valid(form)
+    
+
+class CarUpdateView(
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    generic.UpdateView):
+    model = Car
+    template_name = "service/user_order_create.html"
+    form_class = CarCreateForm
+    success_url = reverse_lazy('user_cars')
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form.instance.client = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self) -> bool | None:
+        obj = self.get_object()
+        return obj.client == self.request.user
+
+
+class OrderDeleteView(
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    generic.DeleteView
+):
+    model = Order
+    template_name = "service/order_delete.html"
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.car.client == self.request.user
+
+    def get_success_url(self) -> str:
+        messages.success(self.request, _('Your Order Deleted'))
+        return reverse_lazy("user_orders")
+    
+    def handle_no_permission(self):
+        messages.error(self.request, _("Something went wrong, try again."))
+        return reverse_lazy("order_list")
+    

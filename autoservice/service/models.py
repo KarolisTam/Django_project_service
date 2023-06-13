@@ -48,6 +48,7 @@ class Car(models.Model):
     licence_plate = models.CharField(_("Licence Plate"), max_length=20, db_index=True)
     vin_code = models.CharField(_("VIN Code"), max_length=50, db_index=True)
     note = HTMLField(_("Client note"), max_length=50, null=True, blank=True)
+    foto = models.ImageField(_("foto"), upload_to='service/car_foto', null=True, blank=True)
 
     class Meta:
         ordering = ["licence_plate"]
@@ -58,11 +59,11 @@ class Car(models.Model):
         return self.licence_plate
 
     def get_absolute_url(self):
-        return reverse("car_detail", kwargs={"pk": self.pk})
+        return reverse("cars_detail", kwargs={"pk": self.pk})
 
 
 class Order(models.Model):
-    date = models.DateField(_("data"), db_index=True)
+    date = models.DateField(_("data"), db_index=True, null=True, blank=True, auto_now=True)
     price = models.DecimalField(_("Price"), max_digits=18, decimal_places=2, default=0)
     car = models.ForeignKey(
         Car, 

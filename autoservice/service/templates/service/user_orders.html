@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+<h1>{% trans "yours orders"|capfirst %}<a class="button float-right" href="{% url 'user_order_create' %}">Reserve</a></h1>
+{% if order_list %}
+<ul>
+    {% for order in order_list %}
+        <li class="car-status-{{ order.status }}">
+            <a href="{% url 'order_detail' order.pk %}">{{ order.car.model }}</a>
+            {{ order.get_status_display }}{% if order.due_back %}, {% trans "return by"|capfirst %} {{ order.due_back }}{% endif %}
+            {% if order.status == status and order.is_overdue %}<span class="order-overdue">{% trans "OVERDUE!"|capfirst %}</span>{% endif %}
+            <a class="button" href="{% url 'delete_order' order.pk %}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="box box-warning">
+   {% trans " Car servers history is still empty. Go ahead, try it"|capfirst %}
+</p>
+{% endif %}
+{% endblock content %}

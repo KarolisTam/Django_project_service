@@ -1,0 +1,359 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-12 13:42+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
+"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
+"1 : n % 1 != 0 ? 2: 3);\n"
+
+#: .\service\models.py:14
+msgid "Make"
+msgstr "Gamintojas"
+
+#: .\service\models.py:15
+msgid "Model"
+msgstr "Modelis"
+
+#: .\service\models.py:16
+msgid "Year"
+msgstr "Metai"
+
+#: .\service\models.py:17
+msgid "Engine"
+msgstr "Variklis"
+
+#: .\service\models.py:19
+msgid "cover"
+msgstr "viršelis"
+
+#: .\service\models.py:26
+msgid "car model"
+msgstr "automobilis"
+
+#: .\service\models.py:27
+msgid "car models"
+msgstr "automobilis"
+
+#: .\service\models.py:39
+msgid "client"
+msgstr "klientas"
+
+#: .\service\models.py:48
+msgid "Licence Plate"
+msgstr "Valstybiniai numeriai"
+
+#: .\service\models.py:49
+msgid "VIN Code"
+msgstr "VIN Kodas"
+
+#: .\service\models.py:50
+msgid "Client note"
+msgstr "Kliento pastabos"
+
+#: .\service\models.py:51
+msgid "foto"
+msgstr "nuotrauka"
+
+#: .\service\models.py:55 .\service\models.py:70
+#: .\service\templates\service\order_delete.html:8
+#: .\service\templates\service\orders_detail.html:13
+msgid "car"
+msgstr "mašina"
+
+#: .\service\models.py:56 .\service\templates\base.html:19
+#: .\service\templates\service\index.html:9
+msgid "cars"
+msgstr "mašinos"
+
+#: .\service\models.py:66
+msgid "data"
+msgstr "laikas"
+
+#: .\service\models.py:67
+msgid "Price"
+msgstr "kaina"
+
+#: .\service\models.py:74
+msgid "due back"
+msgstr "gražinimo data"
+
+#: .\service\models.py:88 .\service\models.py:179
+#: .\service\templates\service\order_delete.html:7
+#: .\service\templates\service\order_list.html:11
+#: .\service\templates\service\orders_detail.html:11
+msgid "order"
+msgstr "užsakymas"
+
+#: .\service\models.py:89 .\service\templates\base.html:20
+msgid "orders"
+msgstr "užsakymai"
+
+#: .\service\models.py:100
+msgid "name"
+msgstr "pavadinimas"
+
+#: .\service\models.py:101 .\service\models.py:118
+#: .\service\templates\service\orders_detail.html:24
+msgid "price"
+msgstr "kaina"
+
+#: .\service\models.py:105 .\service\templates\service\index.html:10
+msgid "service"
+msgstr "paslauga"
+
+#: .\service\models.py:106
+msgid "services"
+msgstr "paslaugos"
+
+#: .\service\models.py:117 .\service\templates\service\orders_detail.html:23
+msgid "quantity"
+msgstr "kiekis"
+
+#: .\service\models.py:119
+msgid "total"
+msgstr "galutinė suma"
+
+#: .\service\models.py:132
+msgid "order entry"
+msgstr "užsakymu eilutė"
+
+#: .\service\models.py:133
+msgid "order entries"
+msgstr "užsakymu eilutės"
+
+#: .\service\models.py:169
+msgid "Status"
+msgstr "Statusas"
+
+#: .\service\models.py:185
+msgid "commenter"
+msgstr "komentuotojas"
+
+#: .\service\models.py:189
+msgid "Created"
+msgstr "Sukurta"
+
+#: .\service\models.py:190
+msgid "content"
+msgstr "turinys"
+
+#: .\service\models.py:195
+msgid "order review"
+msgstr "užsakymo atsiliepimas"
+
+#: .\service\models.py:196
+msgid "order reviews"
+msgstr "užsakymo atsiliepimai"
+
+#: .\service\templates\base.html:18
+msgid "home"
+msgstr "pradžia"
+
+#: .\service\templates\base.html:23
+msgid "logout"
+msgstr "atsijungti"
+
+#: .\service\templates\base.html:24
+msgid "my orders"
+msgstr "mano užsakymai"
+
+#: .\service\templates\base.html:25
+msgid "my cars"
+msgstr "mano mašinos"
+
+#: .\service\templates\base.html:27
+msgid "login"
+msgstr "prisijungti"
+
+#: .\service\templates\base.html:28
+msgid "Sign up"
+msgstr "Registruotis"
+
+#: .\service\templates\base.html:32
+msgid "admin"
+msgstr "administratorius"
+
+#: .\service\templates\service\car_details.html:10
+#| msgid "car model"
+msgid "car detail"
+msgstr "automobilis"
+
+#: .\service\templates\service\car_details.html:11
+msgid "owner"
+msgstr "savininkas"
+
+#: .\service\templates\service\car_details.html:12
+#| msgid "Model"
+msgid "model"
+msgstr "Modelis"
+
+#: .\service\templates\service\car_details.html:13
+#| msgid "Licence Plate"
+msgid "license olate"
+msgstr "Valstybiniai numeriai"
+
+#: .\service\templates\service\car_details.html:14
+#| msgid "VIN Code"
+msgid "VIN code"
+msgstr "VIN Kodas"
+
+#: .\service\templates\service\cars.html:9
+msgid "cars registered at service"
+msgstr "aptarnaujamos mašinos service"
+
+#: .\service\templates\service\index.html:7
+msgid "currently statistics"
+msgstr "Dabartine statistika"
+
+#: .\service\templates\service\index.html:11
+msgid "car was fixed"
+msgstr "sutaisytos mašinos"
+
+#: .\service\templates\service\index.html:12
+msgid "already visit this website for"
+msgstr "apsilankiai šiame tinklapyje"
+
+#: .\service\templates\service\order_delete.html:9
+#: .\service\templates\service\orders_detail.html:15
+msgid "date"
+msgstr "data"
+
+#: .\service\templates\service\order_delete.html:13
+msgid "Change your mind?"
+msgstr "Persigalvojai?"
+
+#: .\service\templates\service\order_list.html:5
+#: .\service\templates\service\orders_detail.html:5
+#| msgid "services"
+msgid "service orders"
+msgstr "paslaugos"
+
+#: .\service\templates\service\order_list.html:14
+msgid "No orders found."
+msgstr "Užsakymu nerasta"
+
+#: .\service\templates\service\orders_detail.html:12
+#| msgid "car model"
+msgid "car owner"
+msgstr "automobilis"
+
+#: .\service\templates\service\orders_detail.html:14
+#| msgid "Licence Plate"
+msgid "car licence plate"
+msgstr "Valstybiniai numeriai"
+
+#: .\service\templates\service\orders_detail.html:16
+#| msgid "due back"
+msgid "car due back"
+msgstr "gražinimo data"
+
+#: .\service\templates\service\orders_detail.html:17
+msgid "customer notes"
+msgstr "Kliento pastabos"
+
+#: .\service\templates\service\orders_detail.html:25
+#| msgid "Status"
+msgid "status"
+msgstr "Statusas"
+
+#: .\service\templates\service\orders_detail.html:31
+#| msgid "order entries"
+msgid "no order entries found."
+msgstr "užsakymu eilutės"
+
+#: .\service\templates\service\orders_detail.html:34
+#| msgid "price"
+msgid "total price"
+msgstr "kaina"
+
+#: .\service\templates\service\orders_detail.html:35
+#| msgid "order reviews"
+msgid "reviews"
+msgstr "užsakymo atsiliepimai"
+
+#: .\service\templates\service\orders_detail.html:37
+#| msgid "order review"
+msgid "leave your review"
+msgstr "užsakymo atsiliepimas"
+
+#: .\service\templates\service\orders_detail.html:43
+msgid "the car owner or employee can participate in the order discussion"
+msgstr "automobilio savininkas ar darbuotojas gali dalyvauti užsakymo aptarime"
+
+#: .\service\templates\service\user_car_create.html:3
+msgid "make car at"
+msgstr "pridėti mašina"
+
+#: .\service\templates\service\user_car_create.html:5
+msgid "add your car"
+msgstr "pridėti nauja mašina"
+
+#: .\service\templates\service\user_cars.html:3
+#| msgid "my cars"
+msgid "my cars at "
+msgstr "mano mašinos"
+
+#: .\service\templates\service\user_cars.html:5
+#| msgid "my cars"
+msgid "your cars"
+msgstr "mano mašinos"
+
+#: .\service\templates\service\user_cars.html:5
+msgid "add new car"
+msgstr "pridėti mašina"
+
+#: .\service\templates\service\user_cars.html:11
+msgid "edit"
+msgstr "koregtuoi"
+
+#: .\service\templates\service\user_order_create.html:3
+msgid "Make order at "
+msgstr "Sukurti užsakyma"
+
+#: .\service\templates\service\user_order_create.html:5
+#| msgid "Created"
+msgid "create order"
+msgstr "Sukurta"
+
+#: .\service\templates\service\user_orders.html:4
+#| msgid "my orders"
+msgid "yours orders"
+msgstr "mano užsakymai"
+
+#: .\service\templates\service\user_orders.html:10
+msgid "return by"
+msgstr "gražinta bus"
+
+#: .\service\templates\service\user_orders.html:11
+msgid "OVERDUE!"
+msgstr "VELUOTJA"
+
+#: .\service\templates\service\user_orders.html:18
+msgid " Car servers history is still empty. Go ahead, try it"
+msgstr "Automobilių serverių istorija vis dar tuščia. Pirmyn, pabandyk"
+
+#: .\service\views.py:122
+msgid "Review posted!"
+msgstr "Atsiliepimas pasidalintas!"
+
+#: .\service\views.py:192
+msgid "Your Order Deleted"
+msgstr "Jūsų užsakymas ištrintas"
+
+#: .\service\views.py:196
+msgid "Something went wrong, try again."
+msgstr "Kažkas nepavyko, bandykit dar kartą"
